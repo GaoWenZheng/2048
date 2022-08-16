@@ -57,6 +57,7 @@ class KeyboardInputManager {
         if (mapped !== undefined) {
           event.preventDefault();
           self.emit("move", mapped);
+          if(startai)step()
         }
       }
 
@@ -121,6 +122,7 @@ class KeyboardInputManager {
       if (Math.max(absDx, absDy) > 10) {
         // (right : left) : (down : up)
         self.emit("move", absDx > absDy ? (dx > 0 ? 1 : 3) : (dy > 0 ? 2 : 0));
+         if(startai)step()
       }
     });
   }
