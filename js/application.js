@@ -12,7 +12,7 @@ var workers = [
     new Worker("js/ai.js"),
     new Worker("js/ai.js")
 ];
-
+var hdyp = document.getElementById('hdyp');
 var working = 0;
 var bestMove, bestResult;
 var startTime, totalMove;
@@ -25,7 +25,8 @@ for (let i = 0; i < 4; ++i) {
             bestMove = i;
         }
         if (working == 0) {
-            game.move(bestMove);
+            //game.move(bestMove);
+            hdyp.innerHTML = ['↑','→','↓','←'][bestMove]
             totalMove++;
             if (game.over) stopAI();
             if (game.won) {
@@ -56,9 +57,6 @@ function step() {
     for (var i = 0; i < 4; ++i) workers[i].postMessage({board: board, dir: i});
 }
 
-document.addEventListener("keydown", function (event) {
-    step()
-  });
 
 function initAI() {
     startAI = () => {
