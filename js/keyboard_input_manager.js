@@ -33,10 +33,10 @@ class KeyboardInputManager {
     var self = this;
 
     var map = {
-      38: 0,
-      39: 1,
-      40: 2,
-      37: 3,
+      38: 0,//上
+      39: 1,//右
+      40: 2,//下↑→↓←
+      37: 3,//左
       75: 0,
       76: 1,
       74: 2,
@@ -56,7 +56,7 @@ class KeyboardInputManager {
       if (!modifiers) {
         if (mapped !== undefined) {
           event.preventDefault();
-          //self.emit("move", mapped);
+          self.emit("move", mapped);
         }
       }
 
@@ -120,7 +120,7 @@ class KeyboardInputManager {
 
       if (Math.max(absDx, absDy) > 10) {
         // (right : left) : (down : up)
-        //self.emit("move", absDx > absDy ? (dx > 0 ? 1 : 3) : (dy > 0 ? 2 : 0));
+        self.emit("move", absDx > absDy ? (dx > 0 ? 1 : 3) : (dy > 0 ? 2 : 0));
       }
     });
   }
