@@ -62,7 +62,7 @@ function initAI() {
     startAI = () => {
         totalMove = 0;
         startTime = Date.now();
-        document.getElementsByClassName("ai-buttons")[1].innerHTML = "Stop";
+        //document.getElementsByClassName("ai-buttons")[1].innerHTML = "Stop";
         aiRunning = true;
         step();
         startAI = stopAI;
@@ -75,7 +75,7 @@ function stopAI() {
     console.log("Time elapsed: " + (endTime - startTime) / 1000 + " seconds"
         + "\nMoves taken: " + totalMove + " moves"
         + "\nSpeed: " + totalMove * 1000 / (endTime - startTime) + " moves per second");
-    document.getElementsByClassName("ai-buttons")[1].innerHTML = "Start AI";
+    //document.getElementsByClassName("ai-buttons")[1].innerHTML = "Start AI";
     aiRunning = false;
     initAI();
 }
