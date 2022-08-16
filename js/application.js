@@ -16,9 +16,9 @@ var hdyp = document.getElementById('hdyp');
 var working = 0;
 var bestMove, bestResult;
 var startTime, totalMove;
-
+var startai = false;
 for (let i = 0; i < 4; ++i) {
-    workers[i].onmessage = function(e) {
+    workers[i].onmessage = function (e) {
         working--;
         if (e.data > bestResult) {
             bestResult = e.data;
@@ -26,7 +26,7 @@ for (let i = 0; i < 4; ++i) {
         }
         if (working == 0) {
             //game.move(bestMove);
-            hdyp.innerHTML = ['↑','→','↓','←'][bestMove]
+            hdyp.innerHTML = ['↑', '→', '↓', '←'][bestMove]
             totalMove++;
             if (game.over) stopAI();
             if (game.won) {
@@ -54,30 +54,39 @@ function step() {
     bestResult = 0;
     working = 4;
     bestMove = 0 | 4 * Math.random();
-    for (var i = 0; i < 4; ++i) workers[i].postMessage({board: board, dir: i});
+    for (var i = 0; i < 4; ++i) workers[i].postMessage({ board: board, dir: i });
 }
 
-
-function initAI() {
-    startAI = () => {
-        totalMove = 0;
-        startTime = Date.now();
-        //document.getElementsByClassName("ai-buttons")[1].innerHTML = "Stop";
-        aiRunning = true;
-        step();
-        startAI = stopAI;
+function startAi() {
+    startai = !startai;
+    if (!startai) {
+        hdyp.innerHTML = '→';
+    } else {
+        step()
     }
 }
 
+// function initAI() {
+//     startAI = () => {
+//         totalMove = 0;
+//         startTime = Date.now();
+//         //document.getElementsByClassName("ai-buttons")[1].innerHTML = "Stop";
+//         aiRunning = true;
+//         step();
+//         startAI = stopAI;
+//     }
+// }
 
-function stopAI() {
-    var endTime = Date.now();
-    console.log("Time elapsed: " + (endTime - startTime) / 1000 + " seconds"
-        + "\nMoves taken: " + totalMove + " moves"
-        + "\nSpeed: " + totalMove * 1000 / (endTime - startTime) + " moves per second");
-    //document.getElementsByClassName("ai-buttons")[1].innerHTML = "Start AI";
-    aiRunning = false;
-    initAI();
-}
 
-initAI();
+// function stopAI() {
+//     var endTime = Date.now();
+//     console.log("Time elapsed: " + (endTime - startTime) / 1000 + " seconds"
+//         + "\nMoves taken: " + totalMove + " moves"
+//         + "\nSpeed: " + totalMove * 1000 / (endTime - startTime) + " moves per second");
+//     //document.getElementsByClassName("ai-buttons")[1].innerHTML = "Start AI";
+
+//     aiRunning = false;
+//     initAI();
+// }
+
+// initAI();
