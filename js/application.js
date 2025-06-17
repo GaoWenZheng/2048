@@ -5,7 +5,7 @@ window.requestAnimationFrame(function () {
 });
 
 var aiRunning = false;
-
+var gamemove = false;
 var workers = [
     new Worker("js/ai.js"),
     new Worker("js/ai.js"),
@@ -25,8 +25,12 @@ for (let i = 0; i < 4; ++i) {
             bestMove = i;
         }
         if (working == 0) {
-            //game.move(bestMove);
-            hdyp.innerHTML = ['↑', '→', '↓', '←'][bestMove]
+            if (gamemove) {
+                game.move(bestMove);
+            } else {
+                hdyp.innerHTML = ['↑', '→', '↓', '←'][bestMove]
+            }
+
             totalMove++;
             if (game.over) stopAI();
             if (game.won) {
@@ -66,27 +70,24 @@ function startAi() {
     }
 }
 
-// function initAI() {
-//     startAI = () => {
-//         totalMove = 0;
-//         startTime = Date.now();
-//         //document.getElementsByClassName("ai-buttons")[1].innerHTML = "Stop";
-//         aiRunning = true;
-//         step();
-//         startAI = stopAI;
-//     }
-// }
+function toggleAI() { }
 
+function startAI() {
+    totalMove = 0;
+    startTime = Date.now();
+    aiRunning = true;
+    gamemove = true;
+    step();
+    toggleAI = stopAI;
 
-// function stopAI() {
-//     var endTime = Date.now();
-//     console.log("Time elapsed: " + (endTime - startTime) / 1000 + " seconds"
-//         + "\nMoves taken: " + totalMove + " moves"
-//         + "\nSpeed: " + totalMove * 1000 / (endTime - startTime) + " moves per second");
-//     //document.getElementsByClassName("ai-buttons")[1].innerHTML = "Start AI";
+}
 
-//     aiRunning = false;
-//     initAI();
-// }
+function stopAI() {
+    const endTime = Date.now();
+    console.log(`Time elapsed: ${(endTime - startTime) / 1000} seconds\nMoves taken: ${totalMove} moves\nSpeed: ${totalMove * 1000 / (endTime - startTime)} moves per second`);
+    aiRunning = false;
+    gamemove = false;
+    toggleAI = startAI;
+}
 
-// initAI();
+toggleAI = startAI;
