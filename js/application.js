@@ -27,7 +27,8 @@ for (let i = 0; i < 4; ++i) {
         if (working == 0) {
             if (gamemove) {
                 game.move(bestMove);
-            } else {
+            }
+            if (startai) {
                 hdyp.innerHTML = ['↑', '→', '↓', '←'][bestMove]
             }
 
